@@ -8,24 +8,65 @@
     tools:context=".MainActivity">
 
     <GridView
-        android:layout_marginTop="10dp"
+        android:id="@+id/mmsListView"
         android:layout_width="match_parent"
-        android:layout_weight="9"
-        android:numColumns="auto_fit"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:columnWidth="120dp"
         android:gravity="center"
-        android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="10dp"
-        android:id="@+id/mmsListView"
+        android:numColumns="auto_fit"
         android:paddingHorizontal="10dp"
-        android:layout_height="wrap_content" />
-    <Button android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:textAlignment="center"
-        android:text="click me"
-        android:gravity="center_horizontal"
-        android:onClick="clickMe"/>
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="10dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="5dp"
+        android:gravity="center_vertical">
+
+        <android.widget.Button
+            android:textAllCaps="false"
+            android:background="@drawable/button_primary"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+
+            android:fontFamily="@font/raleway_bold"
+            android:onClick="clickMe"
+            android:text="Stop Patrolling"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <android.widget.Button
+
+            android:textAllCaps="false"
+            android:background="@drawable/button_outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:textColor="#515151"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/raleway_bold"
+            android:onClick="clickMe"
+            android:text="View Defects"
+            android:textSize="20sp" />
+
+<!--        <Button-->
+<!--            android:background="@drawable/button_outlined"-->
+
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:onClick="clickMe"-->
+<!--            android:text="View Defects"-->
+<!--            android:textColor="@color/black"-->
+
+<!--            android:textSize="20sp" />-->
+    </LinearLayout>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

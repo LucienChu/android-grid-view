@@ -23,9 +23,6 @@ import com.example.myapplication.R;
 import java.util.List;
 
 public class LabelListViewAdapter extends ArrayAdapter<Model> {
-    private final int ACTIVE_COLOR = Color.parseColor("#e92e4f");
-    private final int DEFAULT_COLOR = Color.BLACK;
-
     private final List<Model> list;
     private final Activity context;
 
@@ -89,14 +86,16 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
     }
 
     private void changeColor(TextView titleTextView, TextView counterTextView, ImageView imageView, Boolean isSelected) {
+        int activeColor = context.getResources().getColor(R.color.theme_red);
+        int defaultColor = Color.BLACK;
         if (isSelected) {
-            imageView.setColorFilter(ACTIVE_COLOR);
-            titleTextView.setTextColor(ACTIVE_COLOR);
-            counterTextView.setTextColor(ACTIVE_COLOR);
+            imageView.setColorFilter(activeColor);
+            titleTextView.setTextColor(activeColor);
+            counterTextView.setTextColor(activeColor);
         } else {
-            imageView.setColorFilter(DEFAULT_COLOR);
-            titleTextView.setTextColor(DEFAULT_COLOR);
-            counterTextView.setTextColor(DEFAULT_COLOR);
+            imageView.setColorFilter(defaultColor);
+            titleTextView.setTextColor(defaultColor);
+            counterTextView.setTextColor(defaultColor);
         }
     }
 
