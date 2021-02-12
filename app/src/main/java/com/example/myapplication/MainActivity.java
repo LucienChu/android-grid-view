@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         models.add(new Model("Snow Accumulation", 1, false));
         models.add(new Model("Encroachment", 1, false));
         models.add(new Model("Signage Issue", 1, false));
-        models.add(new Model("Pothole Paved or None-Paved Shoulder", 1, false));
+        models.add(new Model("Pothole Paved or Non-Paved Shoulder", 0, false));
 
 //        models.add(new Model("ins", 1, false));
 //        models.add(new Model("ins", 1, false));

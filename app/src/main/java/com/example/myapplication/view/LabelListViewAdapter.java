@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplication.data.Model;
 import com.example.myapplication.R;
@@ -42,18 +40,21 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View labelView;
+        ConstraintLayout labelViewWrapper;
         TextView title;
         TextView counter;
         ImageView imageView;
         // need to inflate a labelView, which would be expensive
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            labelView = layoutInflater.inflate(R.layout.list_row, parent, false);
+
+            labelView = layoutInflater.inflate(R.layout.label_grid_item, parent, false);
+            labelViewWrapper = labelView.findViewById(R.id.labelViewWrapper);
             title = labelView.findViewById(R.id.labelTitleTextView);
             counter = labelView.findViewById(R.id.labelCounterTextView);
             imageView = labelView.findViewById(R.id.labelImage);
 
-            LabelViewHolder labelViewHolder = new LabelViewHolder(title, counter, imageView);
+            LabelViewHolder labelViewHolder = new LabelViewHolder(labelViewWrapper, title, counter, imageView);
             labelView.setTag(labelViewHolder);
         } else {
             labelView = convertView;
@@ -61,6 +62,7 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
         Model model = list.get(position);
 
         LabelViewHolder labelViewHolder = (LabelViewHolder) labelView.getTag();
+        labelViewWrapper = labelViewHolder.labelViewWrapper;
         title = labelViewHolder.titleTextView;
         counter = labelViewHolder.counterTextView;
         imageView = labelViewHolder.labelImageView;
@@ -81,11 +83,45 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
         });
         imageView.setImageResource(context.getResources().getIdentifier(model.getImageSrc(), "drawable", context.getPackageName()));
 
-        changeColor(title, counter, imageView, model.isSelected());
+//        changeColor(title, counter, imageView, model.getCounter(), model.isSelected());
+        changeColor(labelViewWrapper, title, counter, imageView, model);
         return labelView;
     }
 
-    private void changeColor(TextView titleTextView, TextView counterTextView, ImageView imageView, Boolean isSelected) {
+    private void changeColor(ConstraintLayout labelWrapper, TextView titleTextView, TextView counterTextView, ImageView labelImageView, Model model) {
+
+
+        boolean isSelected = model.isSelected();
+        int counter = model.getCounter();
+
+        int activeColor = context.getResources().getColor(R.color.theme_red);
+        int textColorDefault = context.getResources().getColor(R.color.theme_text_color_black);
+        int whiteColor = Color.WHITE;
+
+        // 0 state, red bg, black font and label image color
+        if(counter == 0) {
+            labelWrapper.setBackgroundResource(R.drawable.label_view_background_grey);
+            titleTextView.setTextColor(textColorDefault);
+            counterTextView.setTextColor(textColorDefault);
+            labelImageView.setColorFilter(textColorDefault);
+        }
+        else {
+            // selected red background, white font and label image
+            if (isSelected) {
+                labelWrapper.setBackgroundResource(R.drawable.label_view_background_red);
+                labelImageView.setColorFilter(whiteColor);
+                titleTextView.setTextColor(whiteColor);
+                counterTextView.setTextColor(whiteColor);
+            } else {
+                labelWrapper.setBackgroundResource(R.drawable.label_view_background_grey);
+                labelImageView.setColorFilter(activeColor);
+                titleTextView.setTextColor(activeColor);
+                counterTextView.setTextColor(activeColor);
+            }
+        }
+    }
+
+    private void changeColor(TextView titleTextView, TextView counterTextView, ImageView imageView, int counter, Boolean isSelected) {
         int activeColor = context.getResources().getColor(R.color.theme_red);
         int defaultColor = Color.BLACK;
         if (isSelected) {
@@ -101,11 +137,13 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
 
 
     private static class LabelViewHolder {
+        private final ConstraintLayout labelViewWrapper;
         private final TextView titleTextView;
         private final TextView counterTextView;
         private final ImageView labelImageView;
 
-        public LabelViewHolder(TextView titleTextView, TextView counterTextView, ImageView labelImageView) {
+        public LabelViewHolder(ConstraintLayout labelViewWrapper, TextView titleTextView, TextView counterTextView, ImageView labelImageView) {
+            this.labelViewWrapper = labelViewWrapper;
             this.titleTextView = titleTextView;
             this.counterTextView = counterTextView;
             this.labelImageView = labelImageView;

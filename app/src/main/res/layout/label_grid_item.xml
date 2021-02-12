@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="120dp"
-    android:layout_height="120dp"
+    android:layout_width="115dp"
+    android:layout_height="115dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/label_view_back_ground">
+    android:background="@drawable/label_view_background_grey"
+    android:id="@+id/labelViewWrapper">
 
 
         <TextView
-            android:textColor="#2e2e2e"
+            android:textColor="@color/theme_text_color_black"
             android:layout_marginTop="8dp"
             android:id="@+id/labelTitleTextView"
             android:layout_width="100dp"
@@ -37,14 +38,14 @@
             app:layout_constraintTop_toBottomOf="@+id/labelTitleTextView" />
 
         <TextView
-            android:textColor="#2e2e2e"
+            android:textColor="@color/theme_text_color_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/labelCounterTextView"
-            android:fontFamily="@font/lato_regular"
+            android:fontFamily="@font/lato_bold"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:text="0"
