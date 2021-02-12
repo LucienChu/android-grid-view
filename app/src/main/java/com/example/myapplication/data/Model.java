@@ -5,11 +5,14 @@ public class Model {
     private String labelTitle;
     private boolean selected;
     private int counter;
+    private String imageSrc;
 
     public Model(String name, int counter, boolean isChecked) {
         this.labelTitle = name;
         this.counter = counter;
         this.selected = isChecked;
+        this.imageSrc = name.replaceAll(" ", "_").toLowerCase();
+        this.imageSrc = this.imageSrc.replaceAll("-","_");
     }
 
     public String getLabelTitle() {
@@ -43,6 +46,10 @@ public class Model {
         if (counter >= 0) {
             this.counter = counter;
         }
+    }
+
+    public String getImageSrc() {
+        return this.imageSrc;
     }
 
 }

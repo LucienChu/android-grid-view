@@ -1,69 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:background="@drawable/label_view_back_ground">
 
-<!--    <ImageView-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:src="@mipmap/ic_launcher"-->
-<!--        android:id="@+id/imageId"-->
-<!--        android:contentDescription="just an image" />-->
 
-<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical" >-->
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Hello world"-->
-<!--            android:textColor="#000"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_margin="5dp"-->
-<!--            android:id="@+id/row_title"-->
-<!--            android:textSize="20sp"/>-->
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="2nd stuff"-->
-<!--            android:textColor="#000"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_margin="5dp"-->
-<!--            android:id="@+id/row_desc"-->
-<!--            android:textSize="20sp"/>-->
-<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
+        <TextView
+            android:textColor="#2e2e2e"
+            android:layout_marginTop="8dp"
+            android:id="@+id/labelTitleTextView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center_horizontal"
+            android:text="Label"
+            android:textAlignment="center"
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="#ff0000">
-        <CheckBox
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/labelImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="label image"
+            android:src="@drawable/pothole_paved_surface"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/labelCheckBox"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:text="Label"
-            android:id="@+id/labelTitleTextView"
-            android:gravity="center" />
+            app:layout_constraintTop_toBottomOf="@+id/labelTitleTextView" />
 
         <TextView
+            android:textColor="#2e2e2e"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/labelCounterTextView"
+            android:fontFamily="@font/lato_regular"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:text="0"
-            android:gravity="center" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:gravity="center"
+            android:layout_marginRight="8dp" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

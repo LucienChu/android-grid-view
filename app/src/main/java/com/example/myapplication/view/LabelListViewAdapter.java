@@ -1,13 +1,18 @@
+// View Holder pattern: https://www.youtube.com/watch?v=W2fTwpAiteE
 package com.example.myapplication.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +23,9 @@ import com.example.myapplication.R;
 import java.util.List;
 
 public class LabelListViewAdapter extends ArrayAdapter<Model> {
+    private final int ACTIVE_COLOR = Color.parseColor("#e92e4f");
+    private final int DEFAULT_COLOR = Color.BLACK;
+
     private final List<Model> list;
     private final Activity context;
 
@@ -27,92 +35,81 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
         this.list = list;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+    }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater = (LayoutInflater) this.context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = layoutInflater.inflate(R.layout.list_row, parent, false);
-        TextView title = row.findViewById(R.id.labelTitleTextView);
-        TextView counter = row.findViewById(R.id.labelCounterTextView);
-        CheckBox checkBox = row.findViewById(R.id.labelCheckBox);
+        View labelView;
+        TextView title;
+        TextView counter;
+        ImageView imageView;
+        // need to inflate a labelView, which would be expensive
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            labelView = layoutInflater.inflate(R.layout.list_row, parent, false);
+            title = labelView.findViewById(R.id.labelTitleTextView);
+            counter = labelView.findViewById(R.id.labelCounterTextView);
+            imageView = labelView.findViewById(R.id.labelImage);
 
-        title.setText(list.get(position).getLabelTitle());
-        counter.setText(String.valueOf(list.get(position).getCounter()));
-        checkBox.setChecked(list.get(position).isSelected());
-        row.setOnClickListener(new View.OnClickListener() {
+            LabelViewHolder labelViewHolder = new LabelViewHolder(title, counter, imageView);
+            labelView.setTag(labelViewHolder);
+        } else {
+            labelView = convertView;
+        }
+        Model model = list.get(position);
+
+        LabelViewHolder labelViewHolder = (LabelViewHolder) labelView.getTag();
+        title = labelViewHolder.titleTextView;
+        counter = labelViewHolder.counterTextView;
+        imageView = labelViewHolder.labelImageView;
+        title.setText(model.getLabelTitle());
+        counter.setText(String.valueOf(model.getCounter()));
+        labelView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.get(position).setSelected(!list.get(position).isSelected());
+                boolean toBeChecked = !model.isSelected();
+                model.setSelected(toBeChecked);
+                if (toBeChecked) {
+                    model.increment();
+                } else {
+                    model.decrement();
+                }
                 notifyDataSetChanged();
             }
         });
-        return row;
+        imageView.setImageResource(context.getResources().getIdentifier(model.getImageSrc(), "drawable", context.getPackageName()));
+
+        changeColor(title, counter, imageView, model.isSelected());
+        return labelView;
     }
 
-    private void checkModel() {
-        int a = 40;
+    private void changeColor(TextView titleTextView, TextView counterTextView, ImageView imageView, Boolean isSelected) {
+        if (isSelected) {
+            imageView.setColorFilter(ACTIVE_COLOR);
+            titleTextView.setTextColor(ACTIVE_COLOR);
+            counterTextView.setTextColor(ACTIVE_COLOR);
+        } else {
+            imageView.setColorFilter(DEFAULT_COLOR);
+            titleTextView.setTextColor(DEFAULT_COLOR);
+            counterTextView.setTextColor(DEFAULT_COLOR);
+        }
     }
 
-    class ViewHolder {
-        protected TextView titleTextView;
-        protected TextView counterTextView;
-        protected CheckBox checkbox;
-    }
 
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-        int a = 40;
-    }
+    private static class LabelViewHolder {
+        private final TextView titleTextView;
+        private final TextView counterTextView;
+        private final ImageView labelImageView;
 
-//        @NonNull
-//        @Override
-//        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//            View view = null;
-//            if (convertView == null) {
-//                LayoutInflater inflator = MainActivity.this.getLayoutInflater();
-//                view = inflator.inflate(R.layout.list_row, null);
-//                final ViewHolder viewHolder = new ViewHolder();
-//                viewHolder.titleTextView = (TextView) view.findViewById(R.id.labelTitleTextView);
-//                viewHolder.counterTextView = (TextView) view.findViewById(R.id.labelCounterTextView);
-//                viewHolder.checkbox = (CheckBox) view.findViewById(R.id.labelCheckBox);
-//                viewHolder.checkbox
-//                        .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//
-//                            @Override
-//                            public void onCheckedChanged(CompoundButton buttonView,
-//                                                         boolean isChecked) {
-//                                Model element = (Model) viewHolder.checkbox
-//                                        .getTag();
-//                                element.setSelected(buttonView.isChecked());
-//
-//                            }
-//                        });
-//                view.setTag(viewHolder);
-//                viewHolder.checkbox.setTag(list.get(position));
-//            } else {
-//                view = convertView;
-//                ((ViewHolder) view.getTag()).checkbox.setTag(list.get(position));
-//            }
-//            ViewHolder holder = (ViewHolder) view.getTag();
-//            holder.titleTextView.setText(list.get(position).getLabelTitle());
-//            holder.counterTextView.setText(String.valueOf(list.get(position).getCounter()));
-//            holder.checkbox.setChecked(list.get(position).isSelected());
-//            view.setOnClickListener(v -> {
-//                boolean isCheck = holder.checkbox.isChecked();
-//                holder.checkbox.setChecked(!isCheck);
-//
-//                int currentCount = Integer.parseInt(holder.counterTextView.getText().toString());
-//                if (isCheck) {
-//                    currentCount--;
-//                } else {
-//                    currentCount++;
-//                }
-//                models.get(position).setCounter(currentCount);
-//                holder.counterTextView.setText(String.valueOf(currentCount));
-//                checkModel();
-//            });
-//            return view;
-//        }
+        public LabelViewHolder(TextView titleTextView, TextView counterTextView, ImageView labelImageView) {
+            this.titleTextView = titleTextView;
+            this.counterTextView = counterTextView;
+            this.labelImageView = labelImageView;
+        }
+    }
 }
