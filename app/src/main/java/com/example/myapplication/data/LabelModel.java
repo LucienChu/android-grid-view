@@ -1,13 +1,13 @@
 package com.example.myapplication.data;
 
-public class Model {
+public class LabelModel {
 
     private String labelTitle;
     private boolean selected;
     private int counter;
     private String imageSrc;
 
-    public Model(String name, int counter, boolean isChecked) {
+    public LabelModel(String name, int counter, boolean isChecked) {
         this.labelTitle = name;
         this.counter = counter;
         this.selected = isChecked;

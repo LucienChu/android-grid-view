@@ -53,19 +53,6 @@
             android:text="View Defects"
             android:textSize="20sp" />
 
-<!--        <Button-->
-<!--            android:background="@drawable/button_outlined"-->
-
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="80dp"-->
-<!--            android:layout_marginHorizontal="20dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:onClick="clickMe"-->
-<!--            android:text="View Defects"-->
-<!--            android:textColor="@color/black"-->
-
-<!--            android:textSize="20sp" />-->
     </LinearLayout>
 
 

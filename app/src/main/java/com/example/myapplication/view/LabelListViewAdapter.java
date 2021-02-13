@@ -15,16 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.myapplication.data.Model;
+import com.example.myapplication.data.LabelModel;
 import com.example.myapplication.R;
 
 import java.util.List;
 
-public class LabelListViewAdapter extends ArrayAdapter<Model> {
-    private final List<Model> list;
+public class LabelListViewAdapter extends ArrayAdapter<LabelModel> {
+    private final List<LabelModel> list;
     private final Activity context;
 
-    public LabelListViewAdapter(Activity context, int xmlFileId, List<Model> list) {
+    public LabelListViewAdapter(Activity context, int xmlFileId, List<LabelModel> list) {
         super(context, xmlFileId, list);
         this.context = context;
         this.list = list;
@@ -59,40 +59,40 @@ public class LabelListViewAdapter extends ArrayAdapter<Model> {
         } else {
             labelView = convertView;
         }
-        Model model = list.get(position);
+        LabelModel labelModel = list.get(position);
 
         LabelViewHolder labelViewHolder = (LabelViewHolder) labelView.getTag();
         labelViewWrapper = labelViewHolder.labelViewWrapper;
         title = labelViewHolder.titleTextView;
         counter = labelViewHolder.counterTextView;
         imageView = labelViewHolder.labelImageView;
-        title.setText(model.getLabelTitle());
-        counter.setText(String.valueOf(model.getCounter()));
+        title.setText(labelModel.getLabelTitle());
+        counter.setText(String.valueOf(labelModel.getCounter()));
         labelView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean toBeChecked = !model.isSelected();
-                model.setSelected(toBeChecked);
+                boolean toBeChecked = !labelModel.isSelected();
+                labelModel.setSelected(toBeChecked);
                 if (toBeChecked) {
-                    model.increment();
+                    labelModel.increment();
                 } else {
-                    model.decrement();
+                    labelModel.decrement();
                 }
                 notifyDataSetChanged();
             }
         });
-        imageView.setImageResource(context.getResources().getIdentifier(model.getImageSrc(), "drawable", context.getPackageName()));
+        imageView.setImageResource(context.getResources().getIdentifier(labelModel.getImageSrc(), "drawable", context.getPackageName()));
 
 //        changeColor(title, counter, imageView, model.getCounter(), model.isSelected());
-        changeColor(labelViewWrapper, title, counter, imageView, model);
+        changeColor(labelViewWrapper, title, counter, imageView, labelModel);
         return labelView;
     }
 
-    private void changeColor(ConstraintLayout labelWrapper, TextView titleTextView, TextView counterTextView, ImageView labelImageView, Model model) {
+    private void changeColor(ConstraintLayout labelWrapper, TextView titleTextView, TextView counterTextView, ImageView labelImageView, LabelModel labelModel) {
 
 
-        boolean isSelected = model.isSelected();
-        int counter = model.getCounter();
+        boolean isSelected = labelModel.isSelected();
+        int counter = labelModel.getCounter();
 
         int activeColor = context.getResources().getColor(R.color.theme_red);
         int textColorDefault = context.getResources().getColor(R.color.theme_text_color_black);
